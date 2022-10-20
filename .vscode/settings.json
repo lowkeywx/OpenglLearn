@@ -1,0 +1,5 @@
+{   
+    "cmake.configureArgs": [
+        "-DCMAKE_TOOLCHAIN_FILE=/home/lowkey/work/TSvcpkg/scripts/buildsystems/vcpkg.cmake"
+    ]
+}
