@@ -135,11 +135,19 @@ int main() {
         glVertex2f(0.5,0.5);
         glEnd();
 
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glColor3f(0, 1, 0);
         glBegin(GL_TRIANGLES);
         glVertex2f(-0.5, 0);
         glVertex2f(0, 0.5);
         glVertex2f(0.5, 0);
+        glEnd();
+
+        glColor3f(0, 0, 1);
+        glBegin(GL_LINE_STRIP);
+        glVertex2f(-0.5, -0.5);
+        glVertex2f(0,0);
+        glVertex2f(0.5, -0.5);
         glEnd();
 
         glFlush();
