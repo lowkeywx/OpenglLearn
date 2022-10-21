@@ -134,12 +134,15 @@ int main() {
         glVertex2f(0,0);
         glVertex2f(0.5,0.5);
         glEnd();
-
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glColor3f(0, 1, 0);
+        //设置GL_FILL和GL_POINT看似效果相同，都是填充
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        // 每个点的颜色设置不一样，效果渐变
         glBegin(GL_TRIANGLES);
+        glColor3f(1, 0, 0);
         glVertex2f(-0.5, 0);
+        glColor3f(0, 1, 0);
         glVertex2f(0, 0.5);
+        glColor3f(0, 0, 1);
         glVertex2f(0.5, 0);
         glEnd();
 
