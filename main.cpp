@@ -2,6 +2,7 @@
 #include <sstream>
 #include <thread>
 #include <chrono>
+#include <random>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -115,6 +116,13 @@ int main() {
 
     //auto program = createProgram(vertexShaderSource, fragmentShaderSource);
 
+    std::default_random_engine generator;
+    std::uniform_real_distribution<float> distribution(-1.0,1.0);
+
+    std::default_random_engine generator1(22222);
+    std::uniform_real_distribution<float> distribution1(-1.0,1.0);
+
+
     while (!glfwWindowShouldClose(windows)) {
 
         [windows](){
@@ -160,12 +168,15 @@ int main() {
 //        glVertex2f(0, 0);
 //        glEnd();
 
+
+        GLfloat xPos = distribution(generator);
+        GLfloat yPos = distribution1(generator1);
         glBegin(GL_LINE_LOOP);
-        glVertex2f(0, 0.5);
-        glVertex2f(-0.3, -0.5);
-        glVertex2f(0.4, 0);
-        glVertex2f(-0.4, 0);
-        glVertex2f(0.3, -0.5);
+        glVertex2f(xPos, yPos + 0.5);
+        glVertex2f(xPos-0.3, yPos-0.5);
+        glVertex2f(xPos + 0.4, yPos);
+        glVertex2f(xPos-0.4, yPos);
+        glVertex2f(xPos + 0.3, yPos-0.5);
         glEnd();
 
         glFlush();
