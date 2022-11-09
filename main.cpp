@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <random>
+#include <cmath>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -122,7 +123,8 @@ int main() {
     std::default_random_engine generator1(22222);
     std::uniform_real_distribution<float> distribution1(-1.0,1.0);
 
-
+    const double pi = std::acos(-1);
+    const double du = 2* pi / 360;
     while (!glfwWindowShouldClose(windows)) {
 
         [windows](){
@@ -136,15 +138,15 @@ int main() {
 
         //glUseProgram(program);
 
-        glLineWidth(10);
         glColor3f(1, 0, 0);
-        glBegin(GL_LINES);
-        glVertex2f(0,0);
-        glVertex2f(0.5,0.5);
-        glEnd();
+//        glLineWidth(10);
+//        glBegin(GL_LINES);
+//        glVertex2f(0,0);
+//        glVertex2f(0.5,0.5);
+//        glEnd();
         //设置GL_FILL和GL_POINT看似效果相同，都是填充
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        // 每个点的颜色设置不一样，效果渐变
+        // 每个点的颜色设置不一样，效果渐变，三角形
 //        glBegin(GL_TRIANGLES);
 //        glColor3f(1, 0, 0);
 //        glVertex2f(-0.5, 0);
@@ -153,30 +155,47 @@ int main() {
 //        glColor3f(0, 0, 1);
 //        glVertex2f(0.5, 0);
 //        glEnd();
-
+            //直线
 //        glColor3f(0, 0, 1);
 //        glBegin(GL_LINE_STRIP);
 //        glVertex2f(-0.5, -0.5);
 //        glVertex2f(0,0);
 //        glVertex2f(0.5, -0.5);
 //        glEnd();
-//
+//          //直线
 //        glColor3f(0, 1, 1);
 //        glBegin(GL_LINE_LOOP);
 //        glVertex2f(-0.8, -0.8);
 //        glVertex2f(0.3,0.3);
 //        glVertex2f(0, 0);
 //        glEnd();
+            //五角星
+//        GLfloat xPos = distribution(generator);
+//        GLfloat yPos = distribution1(generator1);
+//        glBegin(GL_LINE_LOOP);
+//        glVertex2f(xPos, yPos + 0.5);
+//        glVertex2f(xPos-0.3, yPos-0.5);
+//        glVertex2f(xPos + 0.4, yPos);
+//        glVertex2f(xPos-0.4, yPos);
+//        glVertex2f(xPos + 0.3, yPos-0.5);
+//        glEnd();
 
-
-        GLfloat xPos = distribution(generator);
-        GLfloat yPos = distribution1(generator1);
+        //直径1的，中心(0，0)的圆,带花边, 因为求出来的线段很多
+        glLineWidth(10);
+        // GL_LINE_LOOP 首尾相连，GL_LINE_STRIP最后一个点和第一个点会出现空隙
         glBegin(GL_LINE_LOOP);
-        glVertex2f(xPos, yPos + 0.5);
-        glVertex2f(xPos-0.3, yPos-0.5);
-        glVertex2f(xPos + 0.4, yPos);
-        glVertex2f(xPos-0.4, yPos);
-        glVertex2f(xPos + 0.3, yPos-0.5);
+        LOG(INFO) << "begin draw yuan";
+
+        for (int i = 0; i < 360; ++i) {
+            if (i%5 == 0) {
+                auto x = std::sin(du * i);
+                auto y = std::cos(du * i);
+                //LOG(INFO) << "X=" << x << " Y=" << y;
+                glVertex2f(x, y);
+            }
+        }
+        LOG(INFO) << "end draw yuan";
+
         glEnd();
 
         glFlush();
