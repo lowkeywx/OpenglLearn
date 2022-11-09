@@ -30,7 +30,7 @@ namespace lk {
         void MyClock::draw() {
             //直径1的，中心(0，0)的圆,带花边, 因为求出来的线段很多
             glColor3f(0.0,0.0,0.0);
-            glLineWidth(10);
+            glLineWidth(6);
             // GL_LINE_LOOP 首尾相连，GL_LINE_STRIP最后一个点和第一个点会出现空隙
             glBegin(GL_LINE_LOOP);
             //用一个字节减少60次 i/6
@@ -47,7 +47,7 @@ namespace lk {
             auto timeT = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             auto localTime = std::localtime(&timeT);
             m_watchHands[WatchHandType::WatchHandType_second].to = m_watchPoint[localTime->tm_sec % 60] * 0.85;
-            m_watchHands[WatchHandType::WatchHandType_Minutes].to = m_watchPoint[localTime->tm_min % 60] * 0.7;
+            m_watchHands[WatchHandType::WatchHandType_Minutes].to = m_watchPoint[localTime->tm_min % 60] * 0.8;
             m_watchHands[WatchHandType::WatchHandType_Hour].to = m_watchPoint[(localTime->tm_hour % 24 - 12) * 5] * 0.6;
             // 画表针
             for (auto& h : m_watchHands) {

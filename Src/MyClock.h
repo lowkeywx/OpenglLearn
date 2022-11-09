@@ -132,7 +132,7 @@ namespace lk {
                     case PointType_Twelfth:
                         return kPointTypeTwelfthStep;
                     case PointType_Sixtieth:
-                        return 1;
+                        return kPointTypeSixtiethStep;
                     case PointType_Max:
                         assert(0);
                         break;
@@ -155,6 +155,7 @@ namespace lk {
             static constexpr int kMaxPointCount {60};
             static constexpr int kPointTypeQuarterStep {15};
             static constexpr int kPointTypeTwelfthStep {5};
+            static constexpr int kPointTypeSixtiethStep {1};
             static constexpr int kCentPointSize{20};
             static constexpr RgbColor kCentPointColor {0.0,0.0,0.0};
             static constexpr int kHSize {8};
