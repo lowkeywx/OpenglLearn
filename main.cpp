@@ -125,6 +125,9 @@ int main() {
 
     const double pi = std::acos(-1);
     const double du = 2* pi / 360;
+
+    std::vector<std::pair<GLfloat,GLfloat>> second;
+
     while (!glfwWindowShouldClose(windows)) {
 
         [windows](){
@@ -181,21 +184,56 @@ int main() {
 //        glEnd();
 
         //直径1的，中心(0，0)的圆,带花边, 因为求出来的线段很多
+        glPointSize(20);
+        glBegin(GL_POINTS);
+        glVertex2f(0,0);
+        glEnd();
+
         glLineWidth(10);
         // GL_LINE_LOOP 首尾相连，GL_LINE_STRIP最后一个点和第一个点会出现空隙
         glBegin(GL_LINE_LOOP);
-        LOG(INFO) << "begin draw yuan";
-
+        //LOG(INFO) << "begin draw yuan";
         for (int i = 0; i < 360; ++i) {
-            if (i%5 == 0) {
+            //点越多越平滑360 / 10还不够平滑
+            if (i%6 == 0) {
                 auto x = std::sin(du * i);
                 auto y = std::cos(du * i);
                 //LOG(INFO) << "X=" << x << " Y=" << y;
                 glVertex2f(x, y);
+                second.emplace_back(x,y);
             }
         }
-        LOG(INFO) << "end draw yuan";
+        //LOG(INFO) << "end draw yuan";
+        glEnd();
 
+        glLineWidth(8);
+        glBegin(GL_LINES);
+        for (int i = 0; i < second.size(); i++) {
+            if (i % 15 == 0) {
+                glVertex2f(second[i].first, second[i].second);
+                glVertex2f(second[i].first * 0.9, second[i].second * 0.9);
+            }
+        }
+        glEnd();
+
+        glLineWidth(6);
+        glBegin(GL_LINES);
+        for (int i = 0; i < second.size(); i++) {
+            if (i % 5 == 0) {
+                glVertex2f(second[i].first, second[i].second);
+                glVertex2f(second[i].first * 0.94, second[i].second * 0.94);
+            }
+        }
+        glEnd();
+
+        glLineWidth(2);
+        glBegin(GL_LINES);
+        for (int i = 0; i < second.size(); i++) {
+            if (i % 5 != 0 && i % 15 != 0) {
+                glVertex2f(second[i].first, second[i].second);
+                glVertex2f(second[i].first * 0.96, second[i].second * 0.96);
+            }
+        }
         glEnd();
 
         glFlush();
