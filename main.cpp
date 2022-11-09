@@ -236,6 +236,30 @@ int main() {
         }
         glEnd();
 
+        auto s = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now()).time_since_epoch().count();
+
+        glLineWidth(2);
+        glBegin(GL_LINES);
+        glVertex2f(0,0);
+        auto indexS = s % 60;
+        glVertex2f(second[indexS].first * 0.9, second[indexS].second * 0.9);
+        glEnd();
+
+        glLineWidth(4);
+        glBegin(GL_LINES);
+        glVertex2f(0,0);
+        auto indexF = s / 60 % 60;
+        glVertex2f(second[indexF].first * 0.7, second[indexF].second * 0.7);
+        glEnd();
+
+        glLineWidth(8);
+        glBegin(GL_LINES);
+        glVertex2f(0,0);
+        auto indexH = s / 3600 % 60;
+        glVertex2f(second[indexH].first * 0.5, second[indexH].second * 0.5);
+        glEnd();
+
+
         glFlush();
         // 不交换背景色不会变化， 默认黑色
         glfwSwapBuffers(windows);
